@@ -1196,7 +1196,6 @@ const DashboardOverview: React.FC = () => {
         </motion.div>
       </div>
       
-      {/* Followers Section removed as per user request */}
       
       {/* Engagement Section */}
       <div className="mt-8">
@@ -1405,10 +1404,6 @@ const DashboardOverview: React.FC = () => {
             <HashtagSection 
               platform="Instagram" 
               selectedBrands={selectedBrands} 
-              posts={selectedBrands.reduce((acc, brand) => {
-                acc[brand] = socialData.instagram[brand]?.posts || [];
-                return acc;
-              }, {} as Record<Brand, InstagramPost[] | TikTokPost[]>)}
             />
           )}
           
@@ -1417,117 +1412,8 @@ const DashboardOverview: React.FC = () => {
             <HashtagSection 
               platform="TikTok" 
               selectedBrands={selectedBrands} 
-              posts={selectedBrands.reduce((acc, brand) => {
-                acc[brand] = socialData.tiktok[brand]?.posts || [];
-                return acc;
-              }, {} as Record<Brand, InstagramPost[] | TikTokPost[]>)}
             />
           )}
-        </motion.div>
-      </div>
-
-
-      {/* Quick Stats Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-        {/* Nordstrom Instagram Stats Card */}
-        {activePlatform === 'Instagram' && (
-          <motion.div
-            custom={0}
-            initial="hidden"
-            animate="visible"
-            variants={cardVariants}
-            className={`rounded-xl p-6 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg hover:shadow-xl transition-shadow duration-300 border-l-4 border-nordstrom-blue`} /* Updated styling */
-          >
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Nordstrom Instagram Quick Stats</p> {/* Consistent styling & title clarification */}
-                <h3 className="text-2xl font-bold text-nordstrom-blue mt-1"> {/* Consistent styling */}
-                  {formatNumber(
-                    socialData.instagram['Nordstrom'] && socialData.instagram['Nordstrom']?.posts
-                      ? socialData.instagram['Nordstrom']?.posts.reduce((sum, post) => sum + post.likesCount + post.commentsCount, 0)
-                      : 0
-                  )}
-                   <span className="text-base font-medium text-gray-500 dark:text-gray-400 ml-1">Total Engagements</span>
-                </h3>
-                <div className="flex flex-col mt-2 text-xs text-gray-600 dark:text-gray-300"> {/* Consistent styling */}
-                  <p>
-                    <span className="text-green-500 font-semibold">↑ { /* Consider brand color for arrow/stat if appropriate */
-                      socialData.instagram['Nordstrom'] && socialData.instagram['Nordstrom']?.posts && socialData.instagram['Nordstrom']?.posts.length > 0
-                        ? formatNumber(Math.round(
-                            socialData.instagram['Nordstrom']?.posts.reduce((sum, post) => sum + post.likesCount, 0)
-                            / socialData.instagram['Nordstrom']?.posts.length
-                          ))
-                        : 0
-                    }</span> avg. likes per post
-                  </p>
-                </div>
-              </div>
-              <div className={`p-3 rounded-full ${darkMode ? 'bg-nordstrom-blue/20' : 'bg-nordstrom-blue/10'}`}> {/* Consistent icon bg */}
-                <FaIcons.FaInstagram className="text-2xl text-nordstrom-blue" /> {/* Consistent icon styling */}
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-      </div>
-
-      {/* Engagement Rate Section */}
-      <div className="grid grid-cols-1 gap-6 mt-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className={`rounded-lg p-5 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md`}
-        >
-          <h3 className="text-lg font-semibold mb-4">{activePlatform} Engagement Rate by Brand</h3>
-          <div className="h-96">
-            {isChartDataEmpty(engagementRateChart) ? (
-              <EmptyChartFallback message={`No ${activePlatform} engagement data available for the selected brands`} />
-            ) : (
-              <Line 
-                data={engagementRateChart} 
-                options={{
-                  ...chartOptions,
-                  scales: {
-                    ...chartOptions.scales,
-                    y: {
-                      ...chartOptions.scales.y,
-                      title: {
-                        display: true,
-                        text: activePlatform === 'TikTok' ? 'Engagement Rate (%)' : 'Engagement',
-                        color: darkMode ? 'white' : 'black',
-                      }
-                    }
-                  },
-                  plugins: {
-                    ...chartOptions.plugins,
-                    tooltip: {
-                      ...chartOptions.plugins.tooltip,
-                      callbacks: {
-                        label: function(context) {
-                          const label = context.dataset.label || '';
-                          const value = context.raw as number;
-                          if (label.includes('Video') || activePlatform === 'TikTok') {
-                            return `${label}: ${value.toFixed(2)}%`;
-                          } else {
-                            return `${label}: ${formatNumber(value)}`;
-                          }
-                        }
-                      }
-                    }
-                  }
-                }}
-              />
-            )}
-          </div>
-          <div className="mt-2 text-sm text-gray-500">
-            <p>
-              {activePlatform === 'Instagram' ? 
-                'For Instagram, image post engagement is measured by likes + comments, while video post engagement rate is calculated as ((likes + comments) / views) * 100%.' : 
-                'For TikTok, engagement rate is calculated as ((likes + comments + shares + collects) / views) * 100%.'
-              }
-            </p>
-          </div>
         </motion.div>
       </div>
       
@@ -1548,60 +1434,6 @@ const DashboardOverview: React.FC = () => {
               ) : (
                 <Bar data={instagramEngagementChart} options={chartOptions} />
               )}
-            </div>
-          </motion.div>
-        )}
-
-        {/* Instagram Reach Chart */}
-        {filterOptions.platform === 'Instagram' && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.55 }}
-            className={`rounded-lg p-5 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md`}
-          >
-            <h3 className="text-lg font-semibold mb-4">Instagram Reach by Brand</h3>
-            <div className="h-80">
-              {/* Create Instagram Reach chart data */}
-              {(() => {
-
-
-                // Define the chart data
-                const reachChartData = {
-                  labels: selectedBrands,
-                  datasets: [
-                    {
-                      label: 'Instagram Reach',
-                      data: selectedBrands.map(brand => {
-                        const brandData = socialData.instagram[brand];
-                        if (!brandData?.posts) return 0;
-
-                        return brandData.posts.reduce((sum, post) => {
-                          const videoViews = Number(post?.videoViewCount || 0);
-                          const likes = Number(post?.likesCount || 0);
-                          const comments = Number(post?.commentsCount || 0);
-
-                          if (videoViews > 0) {
-                            return sum + videoViews; // Use actual video views for videos
-                          } else {
-                            return sum + (likes + comments); // Estimate reach for images
-                          }
-                        }, 0);
-                      }),
-                      backgroundColor: 'rgba(156, 39, 176, 0.5)',
-                      borderColor: 'rgba(156, 39, 176, 1)',
-                      borderWidth: 1,
-                    }
-                  ]
-                };
-                
-                // Return the appropriate component based on data availability
-                if (isChartDataEmpty(reachChartData)) {
-                  return <EmptyChartFallback message="No Instagram reach data available for the selected brands" />;
-                } else {
-                  return <Bar data={reachChartData} options={chartOptions} />;
-                }
-              })()}
             </div>
           </motion.div>
         )}
