@@ -1247,7 +1247,6 @@ const DashboardOverview: React.FC = () => {
         </motion.div>
       </div>
       
-      {/* Followers Section removed as per user request */}
       
       {/* Engagement Section */}
       <div className="mt-8">
@@ -1380,10 +1379,6 @@ const DashboardOverview: React.FC = () => {
             <HashtagSection 
               platform="Instagram" 
               selectedBrands={selectedBrands} 
-              posts={selectedBrands.reduce((acc, brand) => {
-                acc[brand] = socialData.instagram[brand]?.posts || [];
-                return acc;
-              }, {} as Record<Brand, InstagramPost[] | TikTokPost[]>)}
             />
           )}
           
@@ -1392,13 +1387,138 @@ const DashboardOverview: React.FC = () => {
             <HashtagSection 
               platform="TikTok" 
               selectedBrands={selectedBrands} 
-              posts={selectedBrands.reduce((acc, brand) => {
-                acc[brand] = socialData.tiktok[brand]?.posts || [];
-                return acc;
-              }, {} as Record<Brand, InstagramPost[] | TikTokPost[]>)}
             />
           )}
         </motion.div>
+      </div>
+      
+      {/* Social Platform Analysis */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+        {/* Instagram Engagement Chart */}
+        {filterOptions.platform === 'Instagram' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className={`rounded-lg p-5 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md`}
+          >
+            <h3 className="text-lg font-semibold mb-4">Instagram Engagement by Brand</h3>
+            <div className="h-80">
+              {isChartDataEmpty(instagramEngagementChart) ? (
+                <EmptyChartFallback message="No Instagram engagement data available for the selected brands" />
+              ) : (
+                <Bar data={instagramEngagementChart} options={chartOptions} />
+              )}
+            </div>
+          </motion.div>
+        )}
+
+        {/* TikTok Engagement Chart */}
+        {filterOptions.platform === 'TikTok' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className={`rounded-lg p-5 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md`}
+          >
+            <h3 className="text-lg font-semibold mb-4">TikTok Engagement by Brand</h3>
+            <div className="h-80">
+              {isChartDataEmpty(tiktokEngagementChart) ? (
+                <EmptyChartFallback message="No TikTok engagement data available for the selected brands" />
+              ) : (
+                <Bar data={tiktokEngagementChart} options={chartOptions} />
+              )}
+            </div>
+          </motion.div>
+        )}
+        
+        {/* TikTok Reach Chart - NEW */}
+        {filterOptions.platform === 'TikTok' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.65 }}
+            className={`rounded-lg p-5 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md`}
+          >
+            <h3 className="text-lg font-semibold mb-4">TikTok Reach by Brand</h3>
+            <div className="h-80">
+              {/* Generate TikTok Reach chart data */}
+              {(() => {
+                // Create the chart data object
+                const tiktokReachData = {
+                  labels: selectedBrands,
+                  datasets: [
+                    {
+                      label: 'TikTok Reach',
+                      data: selectedBrands.map(brand => {
+                        const brandData = socialData.tiktok[brand];
+                        if (!brandData?.posts) return 0;
+
+                        return brandData.posts.reduce((sum, post) => {
+                          const views = Number(post?.playCount || 0);
+                          return sum + views;
+                        }, 0);
+                      }),
+                      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                      borderColor: 'rgba(0, 0, 0, 1)',
+                      borderWidth: 1,
+                    }
+                  ]
+                };
+                
+                // Check if data is empty and render appropriate component
+                if (isChartDataEmpty(tiktokReachData)) {
+                  return <EmptyChartFallback message="No TikTok reach data available for the selected brands" />;
+                } else {
+                  return <Bar data={tiktokReachData} options={chartOptions} />;
+                }
+              })()}
+            </div>
+          </motion.div>
+        )}
+        
+        {/* TikTok Followers Chart - NEW */}
+        {filterOptions.platform === 'TikTok' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            className={`rounded-lg p-5 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md`}
+          >
+            <h3 className="text-lg font-semibold mb-4">TikTok Followers by Brand</h3>
+            <div className="h-80">
+              {(() => {
+                const followersChartData = generateTikTokFollowersChart(socialData.tiktok, selectedBrands);
+                return isChartDataEmpty(followersChartData) ? (
+                  <EmptyChartFallback message="No TikTok followers data available for the selected brands" />
+                ) : (
+                  <Bar 
+                    data={followersChartData}
+                    options={{
+                      ...chartOptions,
+                      plugins: {
+                        ...chartOptions.plugins,
+                        title: {
+                          display: true,
+                          text: 'TikTok Followers by Brand',
+                          color: darkMode ? 'white' : 'black',
+                        },
+                        tooltip: {
+                          ...chartOptions.plugins.tooltip,
+                          callbacks: {
+                            label: function(context) {
+                              return `Followers: ${formatNumber(context.raw as number)}`;
+                            }
+                          }
+                        }
+                      }
+                    }}
+                  />
+                )
+              })()}
+            </div>
+          </motion.div>
+        )}
       </div>
     </div>
   );

@@ -555,6 +555,64 @@ const SentimentAnalysis: React.FC<SentimentAnalysisProps> = ({ platform, selecte
                    <EmptyChartFallback message="No sentiment distribution data available." />
                 </div>
               )}
+=======
+          
+          {/* Line Chart - Average Sentiment Score Over Time - Side by Side Comparison */}
+          <div className="bg-white dark:bg-gray-800/50 p-4 rounded-lg shadow"> {/* Adjusted inner card styling */}
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-md font-semibold text-gray-700 dark:text-gray-200">Average Sentiment Score Over Time</h3>
+              <FormControl variant="outlined" size="small" sx={{ minWidth: 150 }}>
+                <InputLabel id="competitor-select-label" sx={{color: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : undefined }}>Competitor Brand</InputLabel>
+                <Select
+                  labelId="competitor-select-label"
+                  id="competitor-select"
+                  value={selectedCompetitor}
+                  onChange={(e: SelectChangeEvent) => setSelectedCompetitor(e.target.value as Brand)}
+                  label="Competitor Brand"
+                  sx={{color: (theme) => theme.palette.mode === 'dark' ? 'white' : undefined, '& .MuiOutlinedInput-notchedOutline': {borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.23)' : undefined}, '& .MuiSvgIcon-root': {color: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : undefined}}}
+                >
+                  {selectedBrands.filter(brand => brand !== mainBrand).map(brand => (
+                    <MenuItem key={brand} value={brand}>{brand}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Nordstrom Chart */}
+              <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-md">
+                <h4 className="text-sm font-medium text-gray-600 dark:text-gray-300 mb-2 text-center">{mainBrand}</h4>
+                <div className="h-64">
+                  {averageSentimentOverTimeByBrand.labels.length === 0 ? (
+                    <EmptyChartFallback message="No time-series sentiment data" />
+                  ) : (
+                    <Line 
+                      data={{
+                        labels: averageSentimentOverTimeByBrand.labels,
+                        datasets: averageSentimentOverTimeByBrand.datasets.filter(ds => ds.label === mainBrand)
+                      }} 
+                      options={lineOptions} 
+                    />
+                  )}
+                </div>
+              </div>
+              
+              {/* Competitor Chart */}
+              <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-md">
+                <h4 className="text-sm font-medium text-gray-600 dark:text-gray-300 mb-2 text-center">{selectedCompetitor}</h4>
+                <div className="h-64">
+                  {averageSentimentOverTimeByBrand.labels.length === 0 ? (
+                    <EmptyChartFallback message="No time-series sentiment data" />
+                  ) : (
+                    <Line 
+                      data={{
+                        labels: averageSentimentOverTimeByBrand.labels,
+                        datasets: averageSentimentOverTimeByBrand.datasets.filter(ds => ds.label === selectedCompetitor)
+                      }} 
+                      options={lineOptions} 
+                    />
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
