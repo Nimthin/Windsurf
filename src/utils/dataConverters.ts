@@ -66,12 +66,31 @@ export const convertInstagramRawData = (rawData: any[], brand: Brand): Instagram
       }
     }
     
-    // Determine if this is a video post based on available fields
-    const isVideo = 
-      (post.videoViewCount && parseFloat(post.videoViewCount) > 0) || 
-      (post.videoPlayCount && parseFloat(post.videoPlayCount) > 0) || 
-      post.type === 'video' || 
-      post.mediaType === 'video';
+    // Determine finalMediaType and finalProcessedType
+    let excelRawType = post.type ? String(post.type).trim().toLowerCase() : '';
+    let finalMediaType = ''; // This will be "Image", "Video", or "Sidecar"
+    let finalProcessedType = ''; // This will be "image", "video", or "album"
+
+    if (excelRawType === 'image') {
+      finalMediaType = 'Image';
+      finalProcessedType = 'image';
+    } else if (excelRawType === 'video') {
+      finalMediaType = 'Video';
+      finalProcessedType = 'video';
+    } else if (excelRawType === 'sidecar' || excelRawType === 'carousel') {
+      finalMediaType = 'Sidecar';
+      finalProcessedType = 'album';
+    } else {
+      // Fallback if post.type is missing or not one of the above
+      if ((post.videoViewCount && parseFloat(post.videoViewCount) > 0) || (post.videoPlayCount && parseFloat(post.videoPlayCount) > 0)) {
+        finalMediaType = 'Video';
+        finalProcessedType = 'video';
+      } else {
+        // Default to Image if not clearly a video and type is unknown/missing
+        finalMediaType = 'Image';
+        finalProcessedType = 'image';
+      }
+    }
     
     // Analyze sentiment from caption text
     const captionText = post.caption || '';
@@ -86,14 +105,14 @@ export const convertInstagramRawData = (rawData: any[], brand: Brand): Instagram
       commentsCount: parseFloat(post.commentsCount || '0'),
       locationName: post.locationName || undefined,
       isSponsored: post.isSponsored === 'TRUE' || post.isSponsored === true,
-      mediaType: post.mediaType || (isVideo ? 'video' : 'image'),
+      mediaType: finalMediaType,
       mediaUrl: post.url || post.mediaUrl || '',
       mentions,
       hashtags,
       thumbnailUrl: post.url || post.thumbnailUrl || '',
-      type: isVideo ? 'video' : 'image',
-      videoViewCount: isVideo ? parseFloat(post.videoViewCount || '0') : undefined,
-      videoPlayCount: isVideo ? parseFloat(post.videoPlayCount || '0') : undefined,
+      type: finalProcessedType,
+      videoViewCount: finalMediaType === 'Video' ? parseFloat(post.videoViewCount || '0') : undefined,
+      videoPlayCount: finalMediaType === 'Video' ? parseFloat(post.videoPlayCount || '0') : undefined,
       // Add sentiment analysis
       sentimentScore: sentiment.score,
       sentimentLabel: sentiment.label
