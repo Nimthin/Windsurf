@@ -1119,57 +1119,6 @@ const DashboardOverview: React.FC = () => {
           </div>
         </motion.div>
       </div>
-      
-      {/* Platform Toggle */}
-      <div className={`flex justify-center mb-6 p-4 rounded-lg ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md`}>
-        <ToggleButtonGroup
-          value={activePlatform}
-          exclusive
-          onChange={handlePlatformChange}
-          aria-label="platform"
-          // color="primary" // Overridden by sx
-          sx={{
-            '& .MuiToggleButtonGroup-grouped': {
-              margin: 0.5,
-              border: 0,
-              '&.Mui-disabled': {
-                border: 0,
-              },
-              '&:not(:first-of-type)': {
-                borderRadius: '8px', // MUI default is to remove left border for subsequent buttons
-              },
-              '&:first-of-type': {
-                borderRadius: '8px',
-              },
-            },
-            '& .MuiToggleButton-root': {
-              textTransform: 'none',
-              padding: '6px 12px',
-              color: darkMode ? '#A0AEC0' : '#004170', // Unselected text (Nordstrom Blue or gray for dark)
-              borderColor: darkMode ? '#4A5568' : '#CBD5E0', // Unselected border (gray)
-              borderRadius: '8px',
-              '&.Mui-selected': {
-                color: 'white',
-                backgroundColor: '#004170', // Nordstrom Blue
-                borderColor: '#004170',
-                '&:hover': {
-                  backgroundColor: '#003459', // Darker Nordstrom Blue
-                },
-              },
-              '&:hover': {
-                backgroundColor: darkMode ? 'rgba(0, 65, 112, 0.15)' : 'rgba(0, 65, 112, 0.05)', // Light Nordstrom Blue tint
-              },
-            },
-          }}
-        >
-          <ToggleButton value="Instagram" aria-label="Instagram">
-            <FaIcons.FaInstagram className="mr-2" /> Instagram
-          </ToggleButton>
-          <ToggleButton value="TikTok" aria-label="TikTok">
-            <FaIcons.FaTiktok className="mr-2" /> TikTok
-          </ToggleButton>
-        </ToggleButtonGroup>
-      </div>
 
       {/* Sentiment Analysis Section */}
       <div className="mt-8">
