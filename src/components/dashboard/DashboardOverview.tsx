@@ -256,11 +256,27 @@ const DashboardOverview: React.FC = () => {
     }
 
     // Calculate averages and rates for Nordstrom
+    // General averages for all Instagram posts
     if (totalInstagramPosts > 0) {
-      avgInstagramLikes = totalInstagramLikes / totalInstagramPosts;
-      avgInstagramComments = totalInstagramComments / totalInstagramPosts;
-      instagramEngagementRate = ((totalInstagramLikes + totalInstagramComments) / totalInstagramPosts) / 100;
+      avgInstagramLikes = totalInstagramLikes / totalInstagramPosts; // Remains average for all posts
+      avgInstagramComments = parseFloat((totalInstagramComments / totalInstagramPosts).toFixed(1)); // Remains average for all posts
+    } else {
+      avgInstagramLikes = 0;
+      avgInstagramComments = 0.0;
     }
+
+    // Instagram Video Engagement Rate for Nordstrom
+    const nordstromInstagramVideoPosts = socialData.instagram['Nordstrom']?.posts.filter(p => (p as InstagramPost).mediaType === 'Video') as InstagramPost[] || [];
+    let nordstromVideoLikes = 0;
+    let nordstromVideoComments = 0;
+    let nordstromVideoViews = 0;
+    if (nordstromInstagramVideoPosts.length > 0) {
+      nordstromVideoLikes = nordstromInstagramVideoPosts.reduce((sum, p) => sum + (p.likesCount || 0), 0);
+      nordstromVideoComments = nordstromInstagramVideoPosts.reduce((sum, p) => sum + (p.commentsCount || 0), 0);
+      nordstromVideoViews = nordstromInstagramVideoPosts.reduce((sum, p) => sum + (p.videoViewCount || 0), 0);
+    }
+    const rawNordstromVideoER = nordstromVideoViews > 0 ? ((nordstromVideoLikes + nordstromVideoComments) / nordstromVideoViews) * 100 : 0;
+    instagramEngagementRate = parseFloat(rawNordstromVideoER.toFixed(1));
     
     if (totalTikTokPosts > 0) {
       avgTikTokViews = totalTikTokViews / totalTikTokPosts;
@@ -270,11 +286,27 @@ const DashboardOverview: React.FC = () => {
     }
     
     // Calculate averages and rates for competitor
+    // General averages for all Instagram posts for competitor
     if (competitorInstagramPosts > 0) {
-      competitorAvgInstagramLikes = competitorInstagramLikes / competitorInstagramPosts;
-      competitorAvgInstagramComments = competitorInstagramComments / competitorInstagramPosts;
-      competitorInstagramEngagementRate = ((competitorInstagramLikes + competitorInstagramComments) / competitorInstagramPosts) / 100;
+      competitorAvgInstagramLikes = competitorInstagramLikes / competitorInstagramPosts; // Remains average for all posts
+      competitorAvgInstagramComments = parseFloat((competitorInstagramComments / competitorInstagramPosts).toFixed(1)); // Remains average for all posts
+    } else {
+      competitorAvgInstagramLikes = 0;
+      competitorAvgInstagramComments = 0.0;
     }
+
+    // Instagram Video Engagement Rate for Competitor
+    const competitorInstagramVideoPosts = socialData.instagram[selectedCompetitor]?.posts.filter(p => (p as InstagramPost).mediaType === 'Video') as InstagramPost[] || [];
+    let competitorVideoLikes = 0;
+    let competitorVideoComments = 0;
+    let competitorVideoViews = 0;
+    if (competitorInstagramVideoPosts.length > 0) {
+      competitorVideoLikes = competitorInstagramVideoPosts.reduce((sum, p) => sum + (p.likesCount || 0), 0);
+      competitorVideoComments = competitorInstagramVideoPosts.reduce((sum, p) => sum + (p.commentsCount || 0), 0);
+      competitorVideoViews = competitorInstagramVideoPosts.reduce((sum, p) => sum + (p.videoViewCount || 0), 0);
+    }
+    const rawCompetitorVideoER = competitorVideoViews > 0 ? ((competitorVideoLikes + competitorVideoComments) / competitorVideoViews) * 100 : 0;
+    competitorInstagramEngagementRate = parseFloat(rawCompetitorVideoER.toFixed(1));
     
     if (competitorTikTokPosts > 0) {
       competitorAvgTikTokViews = competitorTikTokViews / competitorTikTokPosts;

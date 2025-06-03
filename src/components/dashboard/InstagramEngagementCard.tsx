@@ -25,27 +25,27 @@ const InstagramEngagementCard: React.FC<InstagramEngagementCardProps> = ({
     >
       <div className="flex justify-between items-start">
         <div>
-          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Engagement Rate (Insta)</p>
-          <h3 className="text-3xl font-bold text-nordstrom-blue mt-1">{(instagramEngagementRate * 100).toFixed(2)}%</h3>
+          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Video Engagement Rate (Insta)</p>
+          <h3 className="text-3xl font-bold text-nordstrom-blue mt-1">{(instagramEngagementRate).toFixed(1)}%</h3> {/* Value is already a percentage, display with 1 decimal */}
         </div>
         <BiIcons.BiTrendingUp className="text-3xl text-nordstrom-blue/70 dark:text-nordstrom-blue/60" />
       </div>
       <div className="mt-4 text-xs text-gray-600 dark:text-gray-300">
         <div className="flex justify-between">
           <p>Nordstrom</p>
-          <p className="font-medium">{(instagramEngagementRate * 100).toFixed(2)}%</p>
+          <p className="font-medium">{(instagramEngagementRate).toFixed(1)}%</p>
         </div>
         <div className="flex justify-between mt-1">
           <p>{selectedCompetitor}</p>
-          <p className="font-medium">{(competitorInstagramEngagementRate * 100).toFixed(2)}%</p>
+          <p className="font-medium">{(competitorInstagramEngagementRate).toFixed(1)}%</p>
         </div>
         {instagramEngagementRate > 0 && competitorInstagramEngagementRate > 0 && (
           <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-600">
             <p>
               {instagramEngagementRate > competitorInstagramEngagementRate 
-                ? `Nordstrom has ${((instagramEngagementRate - competitorInstagramEngagementRate) * 100).toFixed(2)}% higher engagement.`
+                ? `Nordstrom has ${(instagramEngagementRate - competitorInstagramEngagementRate).toFixed(1)}% higher engagement.`
                 : instagramEngagementRate < competitorInstagramEngagementRate
-                  ? `${selectedCompetitor} has ${((competitorInstagramEngagementRate - instagramEngagementRate) * 100).toFixed(2)}% higher engagement.`
+                  ? `${selectedCompetitor} has ${(competitorInstagramEngagementRate - instagramEngagementRate).toFixed(1)}% higher engagement.`
                   : 'Equal engagement rates.'}
             </p>
           </div>
