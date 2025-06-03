@@ -773,7 +773,7 @@ const DashboardOverview: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className={`rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg p-6`} /* Updated styling */
+          className={`rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg p-6`} {/* Updated styling */}
         >
           <div className="flex justify-between items-center mb-4"> {/* mb-4 can be adjusted if p-6 provides enough space */}
             <h2 className="text-xl font-semibold text-nordstrom-blue"> {/* Updated styling */}
@@ -1120,13 +1120,64 @@ const DashboardOverview: React.FC = () => {
         </motion.div>
       </div>
 
+      {/* Platform Toggle */}
+      <div className={`flex justify-center mb-6 p-4 rounded-lg ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md`}>
+        <ToggleButtonGroup
+          value={activePlatform}
+          exclusive
+          onChange={handlePlatformChange}
+          aria-label="platform"
+          // color="primary" // Overridden by sx
+          sx={{
+            '& .MuiToggleButtonGroup-grouped': {
+              margin: 0.5,
+              border: 0,
+              '&.Mui-disabled': {
+                border: 0,
+              },
+              '&:not(:first-of-type)': {
+                borderRadius: '8px', // MUI default is to remove left border for subsequent buttons
+              },
+              '&:first-of-type': {
+                borderRadius: '8px',
+              },
+            },
+            '& .MuiToggleButton-root': {
+              textTransform: 'none',
+              padding: '6px 12px',
+              color: darkMode ? '#A0AEC0' : '#004170', // Unselected text (Nordstrom Blue or gray for dark)
+              borderColor: darkMode ? '#4A5568' : '#CBD5E0', // Unselected border (gray)
+              borderRadius: '8px',
+              '&.Mui-selected': {
+                color: 'white',
+                backgroundColor: '#004170', // Nordstrom Blue
+                borderColor: '#004170',
+                '&:hover': {
+                  backgroundColor: '#003459', // Darker Nordstrom Blue
+                },
+              },
+              '&:hover': {
+                backgroundColor: darkMode ? 'rgba(0, 65, 112, 0.15)' : 'rgba(0, 65, 112, 0.05)', // Light Nordstrom Blue tint
+              },
+            },
+          }}
+        >
+          <ToggleButton value="Instagram" aria-label="Instagram">
+            <FaIcons.FaInstagram className="mr-2" /> Instagram
+          </ToggleButton>
+          <ToggleButton value="TikTok" aria-label="TikTok">
+            <FaIcons.FaTiktok className="mr-2" /> TikTok
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </div>
+
       {/* Sentiment Analysis Section */}
       <div className="mt-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 }}
-          className={`rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg p-6`} /* Updated styling */
+          className={`rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg p-6`} {/* Updated styling */}
         >
           <div className="mb-4 flex justify-between items-center"> {/* Removed p-4 and border from title div, parent has p-6 now */}
             <h2 className="text-xl font-semibold text-nordstrom-blue"> {/* Updated styling */}
@@ -1204,7 +1255,7 @@ const DashboardOverview: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9 }}
-          className={`rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg p-6`} /* Updated styling */
+          className={`rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg p-6`} {/* Updated styling */}
         >
           <div className="flex justify-between items-center mb-4"> {/* Removed p-4, border-b. Added mb-4 */}
             <h2 className="text-xl font-semibold text-nordstrom-blue"> {/* Updated styling */}
@@ -1273,82 +1324,6 @@ const DashboardOverview: React.FC = () => {
           )}
         </motion.div>
       </div>
-
-      {/* Reach Section */}
-      <div className="mt-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.0 }}
-          className={`rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg p-6`} /* Updated styling */
-        >
-          <div className="flex justify-between items-center mb-4"> {/* Removed p-4, border-b. Added mb-4 */}
-            <h2 className="text-xl font-semibold text-nordstrom-blue"> {/* Updated styling */}
-              <MdIcons.MdOutlineWifiTethering className="inline-block mr-2 text-nordstrom-blue" /> {/* Updated styling */}
-              Reach Analytics
-            </h2>
-            <div className="flex space-x-2">
-              <ToggleButtonGroup
-                value={activePlatform}
-                exclusive
-                onChange={(e, newPlatform) => {
-                  if (newPlatform) setActivePlatform(newPlatform);
-                }}
-                size="small"
-                aria-label="platform selection"
-                sx={{
-                  '& .MuiToggleButtonGroup-grouped': {
-                     margin: 0.5, border: 0, '&.Mui-disabled': { border: 0 },
-                    '&:not(:first-of-type)': { borderRadius: '8px' },
-                    '&:first-of-type': { borderRadius: '8px' },
-                  },
-                  '& .MuiToggleButton-root': {
-                    textTransform: 'none', padding: '4px 10px', fontSize: '0.8125rem',
-                    color: darkMode ? '#A0AEC0' : '#004170',
-                    borderColor: darkMode ? '#4A5568' : '#CBD5E0', borderRadius: '8px',
-                    '&.Mui-selected': {
-                      color: 'white', backgroundColor: '#004170', borderColor: '#004170',
-                      '&:hover': { backgroundColor: '#003459' },
-                    },
-                    '&:hover': { backgroundColor: darkMode ? 'rgba(0, 65, 112, 0.15)' : 'rgba(0, 65, 112, 0.05)'},
-                  },
-                }}
-              >
-                <ToggleButton value="Instagram" aria-label="Instagram">
-                  <FaIcons.FaInstagram className="mr-1" /> Instagram
-                </ToggleButton>
-                <ToggleButton value="TikTok" aria-label="TikTok">
-                  <FaIcons.FaTiktok className="mr-1" /> TikTok
-                </ToggleButton>
-              </ToggleButtonGroup>
-            </div>
-          </div>
-          
-          {/* Instagram Reach Analytics */}
-          {activePlatform === 'Instagram' && (
-            <ReachSection 
-              platform="Instagram" 
-              selectedBrands={selectedBrands} 
-              posts={selectedBrands.reduce((acc, brand) => {
-                acc[brand] = socialData.instagram[brand]?.posts || [];
-                return acc;
-              }, {} as Record<Brand, InstagramPost[] | TikTokPost[]>)}
-            />
-          )}
-          
-          {/* TikTok Reach Analytics */}
-          {activePlatform === 'TikTok' && (
-            <ReachSection 
-              platform="TikTok" 
-              selectedBrands={selectedBrands} 
-              posts={selectedBrands.reduce((acc, brand) => {
-                acc[brand] = socialData.tiktok[brand]?.posts || [];
-                return acc;
-              }, {} as Record<Brand, InstagramPost[] | TikTokPost[]>)}
-            />
-          )}
-        </motion.div>
-      </div>
       
       {/* Hashtag Section */}
       <div className="mt-8">
@@ -1356,7 +1331,7 @@ const DashboardOverview: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.1 }}
-          className={`rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg p-6`} /* Updated styling */
+          className={`rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg p-6`} {/* Updated styling */}
         >
           <div className="flex justify-between items-center mb-4"> {/* Removed p-4, border-b. Added mb-4 */}
             <h2 className="text-xl font-semibold text-nordstrom-blue"> {/* Updated styling */}
@@ -1424,294 +1399,6 @@ const DashboardOverview: React.FC = () => {
             />
           )}
         </motion.div>
-      </div>
-
-
-      {/* Quick Stats Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-        {/* Nordstrom Instagram Stats Card */}
-        {activePlatform === 'Instagram' && (
-          <motion.div
-            custom={0}
-            initial="hidden"
-            animate="visible"
-            variants={cardVariants}
-            className={`rounded-xl p-6 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg hover:shadow-xl transition-shadow duration-300 border-l-4 border-nordstrom-blue`} /* Updated styling */
-          >
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Nordstrom Instagram Quick Stats</p> {/* Consistent styling & title clarification */}
-                <h3 className="text-2xl font-bold text-nordstrom-blue mt-1"> {/* Consistent styling */}
-                  {formatNumber(
-                    socialData.instagram['Nordstrom'] && socialData.instagram['Nordstrom']?.posts
-                      ? socialData.instagram['Nordstrom']?.posts.reduce((sum, post) => sum + post.likesCount + post.commentsCount, 0)
-                      : 0
-                  )}
-                   <span className="text-base font-medium text-gray-500 dark:text-gray-400 ml-1">Total Engagements</span>
-                </h3>
-                <div className="flex flex-col mt-2 text-xs text-gray-600 dark:text-gray-300"> {/* Consistent styling */}
-                  <p>
-                    <span className="text-green-500 font-semibold">↑ { /* Consider brand color for arrow/stat if appropriate */
-                      socialData.instagram['Nordstrom'] && socialData.instagram['Nordstrom']?.posts && socialData.instagram['Nordstrom']?.posts.length > 0
-                        ? formatNumber(Math.round(
-                            socialData.instagram['Nordstrom']?.posts.reduce((sum, post) => sum + post.likesCount, 0)
-                            / socialData.instagram['Nordstrom']?.posts.length
-                          ))
-                        : 0
-                    }</span> avg. likes per post
-                  </p>
-                </div>
-              </div>
-              <div className={`p-3 rounded-full ${darkMode ? 'bg-nordstrom-blue/20' : 'bg-nordstrom-blue/10'}`}> {/* Consistent icon bg */}
-                <FaIcons.FaInstagram className="text-2xl text-nordstrom-blue" /> {/* Consistent icon styling */}
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-      </div>
-
-      {/* Engagement Rate Section */}
-      <div className="grid grid-cols-1 gap-6 mt-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className={`rounded-lg p-5 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md`}
-        >
-          <h3 className="text-lg font-semibold mb-4">{activePlatform} Engagement Rate by Brand</h3>
-          <div className="h-96">
-            {isChartDataEmpty(engagementRateChart) ? (
-              <EmptyChartFallback message={`No ${activePlatform} engagement data available for the selected brands`} />
-            ) : (
-              <Line 
-                data={engagementRateChart} 
-                options={{
-                  ...chartOptions,
-                  scales: {
-                    ...chartOptions.scales,
-                    y: {
-                      ...chartOptions.scales.y,
-                      title: {
-                        display: true,
-                        text: activePlatform === 'TikTok' ? 'Engagement Rate (%)' : 'Engagement',
-                        color: darkMode ? 'white' : 'black',
-                      }
-                    }
-                  },
-                  plugins: {
-                    ...chartOptions.plugins,
-                    tooltip: {
-                      ...chartOptions.plugins.tooltip,
-                      callbacks: {
-                        label: function(context) {
-                          const label = context.dataset.label || '';
-                          const value = context.raw as number;
-                          if (label.includes('Video') || activePlatform === 'TikTok') {
-                            return `${label}: ${value.toFixed(2)}%`;
-                          } else {
-                            return `${label}: ${formatNumber(value)}`;
-                          }
-                        }
-                      }
-                    }
-                  }
-                }}
-              />
-            )}
-          </div>
-          <div className="mt-2 text-sm text-gray-500">
-            <p>
-              {activePlatform === 'Instagram' ? 
-                'For Instagram, image post engagement is measured by likes + comments, while video post engagement rate is calculated as ((likes + comments) / views) * 100%.' : 
-                'For TikTok, engagement rate is calculated as ((likes + comments + shares + collects) / views) * 100%.'
-              }
-            </p>
-          </div>
-        </motion.div>
-      </div>
-      
-      {/* Social Platform Analysis */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-        {/* Instagram Engagement Chart */}
-        {filterOptions.platform === 'Instagram' && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className={`rounded-lg p-5 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md`}
-          >
-            <h3 className="text-lg font-semibold mb-4">Instagram Engagement by Brand</h3>
-            <div className="h-80">
-              {isChartDataEmpty(instagramEngagementChart) ? (
-                <EmptyChartFallback message="No Instagram engagement data available for the selected brands" />
-              ) : (
-                <Bar data={instagramEngagementChart} options={chartOptions} />
-              )}
-            </div>
-          </motion.div>
-        )}
-
-        {/* Instagram Reach Chart */}
-        {filterOptions.platform === 'Instagram' && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.55 }}
-            className={`rounded-lg p-5 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md`}
-          >
-            <h3 className="text-lg font-semibold mb-4">Instagram Reach by Brand</h3>
-            <div className="h-80">
-              {/* Create Instagram Reach chart data */}
-              {(() => {
-
-
-                // Define the chart data
-                const reachChartData = {
-                  labels: selectedBrands,
-                  datasets: [
-                    {
-                      label: 'Instagram Reach',
-                      data: selectedBrands.map(brand => {
-                        const brandData = socialData.instagram[brand];
-                        if (!brandData?.posts) return 0;
-
-                        return brandData.posts.reduce((sum, post) => {
-                          const videoViews = Number(post?.videoViewCount || 0);
-                          const likes = Number(post?.likesCount || 0);
-                          const comments = Number(post?.commentsCount || 0);
-
-                          if (videoViews > 0) {
-                            return sum + videoViews; // Use actual video views for videos
-                          } else {
-                            return sum + (likes + comments); // Estimate reach for images
-                          }
-                        }, 0);
-                      }),
-                      backgroundColor: 'rgba(156, 39, 176, 0.5)',
-                      borderColor: 'rgba(156, 39, 176, 1)',
-                      borderWidth: 1,
-                    }
-                  ]
-                };
-                
-                // Return the appropriate component based on data availability
-                if (isChartDataEmpty(reachChartData)) {
-                  return <EmptyChartFallback message="No Instagram reach data available for the selected brands" />;
-                } else {
-                  return <Bar data={reachChartData} options={chartOptions} />;
-                }
-              })()}
-            </div>
-          </motion.div>
-        )}
-
-        {/* TikTok Engagement Chart */}
-        {filterOptions.platform === 'TikTok' && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className={`rounded-lg p-5 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md`}
-          >
-            <h3 className="text-lg font-semibold mb-4">TikTok Engagement by Brand</h3>
-            <div className="h-80">
-              {isChartDataEmpty(tiktokEngagementChart) ? (
-                <EmptyChartFallback message="No TikTok engagement data available for the selected brands" />
-              ) : (
-                <Bar data={tiktokEngagementChart} options={chartOptions} />
-              )}
-            </div>
-          </motion.div>
-        )}
-        
-        {/* TikTok Reach Chart - NEW */}
-        {filterOptions.platform === 'TikTok' && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.65 }}
-            className={`rounded-lg p-5 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md`}
-          >
-            <h3 className="text-lg font-semibold mb-4">TikTok Reach by Brand</h3>
-            <div className="h-80">
-              {/* Generate TikTok Reach chart data */}
-              {(() => {
-                // Create the chart data object
-                const tiktokReachData = {
-                  labels: selectedBrands,
-                  datasets: [
-                    {
-                      label: 'TikTok Reach',
-                      data: selectedBrands.map(brand => {
-                        const brandData = socialData.tiktok[brand];
-                        if (!brandData?.posts) return 0;
-
-                        return brandData.posts.reduce((sum, post) => {
-                          const views = Number(post?.playCount || 0);
-                          return sum + views;
-                        }, 0);
-                      }),
-                      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                      borderColor: 'rgba(0, 0, 0, 1)',
-                      borderWidth: 1,
-                    }
-                  ]
-                };
-                
-                // Check if data is empty and render appropriate component
-                if (isChartDataEmpty(tiktokReachData)) {
-                  return <EmptyChartFallback message="No TikTok reach data available for the selected brands" />;
-                } else {
-                  return <Bar data={tiktokReachData} options={chartOptions} />;
-                }
-              })()}
-            </div>
-          </motion.div>
-        )}
-        
-        {/* TikTok Followers Chart - NEW */}
-        {filterOptions.platform === 'TikTok' && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-            className={`rounded-lg p-5 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-md`}
-          >
-            <h3 className="text-lg font-semibold mb-4">TikTok Followers by Brand</h3>
-            <div className="h-80">
-              {(() => {
-                const followersChartData = generateTikTokFollowersChart(socialData.tiktok, selectedBrands);
-                return isChartDataEmpty(followersChartData) ? (
-                  <EmptyChartFallback message="No TikTok followers data available for the selected brands" />
-                ) : (
-                  <Bar 
-                    data={followersChartData}
-                    options={{
-                      ...chartOptions,
-                      plugins: {
-                        ...chartOptions.plugins,
-                        title: {
-                          display: true,
-                          text: 'TikTok Followers by Brand',
-                          color: darkMode ? 'white' : 'black',
-                        },
-                        tooltip: {
-                          ...chartOptions.plugins.tooltip,
-                          callbacks: {
-                            label: function(context) {
-                              return `Followers: ${formatNumber(context.raw as number)}`;
-                            }
-                          }
-                        }
-                      }
-                    }}
-                  />
-                )
-              })()}
-            </div>
-          </motion.div>
-        )}
       </div>
     </div>
   );
