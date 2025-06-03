@@ -773,7 +773,7 @@ const DashboardOverview: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className={`rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg p-6`} {/* Updated styling */}
+          className={`rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg p-6`} /* Updated styling */
         >
           <div className="flex justify-between items-center mb-4"> {/* mb-4 can be adjusted if p-6 provides enough space */}
             <h2 className="text-xl font-semibold text-nordstrom-blue"> {/* Updated styling */}
@@ -1177,7 +1177,7 @@ const DashboardOverview: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 }}
-          className={`rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg p-6`} {/* Updated styling */}
+          className={`rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg p-6`} /* Updated styling */
         >
           <div className="mb-4 flex justify-between items-center"> {/* Removed p-4 and border from title div, parent has p-6 now */}
             <h2 className="text-xl font-semibold text-nordstrom-blue"> {/* Updated styling */}
@@ -1255,7 +1255,7 @@ const DashboardOverview: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9 }}
-          className={`rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg p-6`} {/* Updated styling */}
+          className={`rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg p-6`} /* Updated styling */
         >
           <div className="flex justify-between items-center mb-4"> {/* Removed p-4, border-b. Added mb-4 */}
             <h2 className="text-xl font-semibold text-nordstrom-blue"> {/* Updated styling */}
@@ -1331,7 +1331,7 @@ const DashboardOverview: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.0 }}
-          className={`rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg p-6`} {/* Updated styling */}
+          className={`rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg p-6`} /* Updated styling */
         >
           <div className="flex justify-between items-center mb-4"> {/* Removed p-4, border-b. Added mb-4 */}
             <h2 className="text-xl font-semibold text-nordstrom-blue"> {/* Updated styling */}
@@ -1407,7 +1407,7 @@ const DashboardOverview: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.1 }}
-          className={`rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg p-6`} {/* Updated styling */}
+          className={`rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg p-6`} /* Updated styling */
         >
           <div className="flex justify-between items-center mb-4"> {/* Removed p-4, border-b. Added mb-4 */}
             <h2 className="text-xl font-semibold text-nordstrom-blue"> {/* Updated styling */}
@@ -1486,7 +1486,7 @@ const DashboardOverview: React.FC = () => {
             initial="hidden"
             animate="visible"
             variants={cardVariants}
-            className={`rounded-xl p-6 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg hover:shadow-xl transition-shadow duration-300 border-l-4 border-nordstrom-blue`} {/* Updated styling */}
+            className={`rounded-xl p-6 ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg hover:shadow-xl transition-shadow duration-300 border-l-4 border-nordstrom-blue`} /* Updated styling */
           >
             <div className="flex items-start justify-between">
               <div>
