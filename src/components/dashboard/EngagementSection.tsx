@@ -394,7 +394,8 @@ const EngagementSection: React.FC<EngagementSectionProps> = ({
   };
 
   return (
-    <div className="p-4">
+    // Removed p-4 from root, padding is handled by parent card in DashboardOverview
+    <div>
       {platform === 'Instagram' && (
         <div className="mb-6">
           <FormControl variant="outlined" size="small" className="min-w-[200px]" sx={{
@@ -444,8 +445,8 @@ const EngagementSection: React.FC<EngagementSectionProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Instagram Image Engagement Chart */}
         {platform === 'Instagram' && (
-          <div className={`p-6 rounded-lg shadow-sm ${darkMode ? 'bg-gray-700' : 'bg-gray-50'} lg:col-span-2`}>
-            <h3 className={`text-lg font-semibold mb-4 ${darkMode ? 'text-white' : 'text-gray-800'}`}>
+          <div className={`p-4 rounded-lg shadow ${darkMode ? 'bg-gray-700/50' : 'bg-gray-50'} lg:col-span-2`}> {/* Updated inner card style */}
+            <h3 className={`text-md font-semibold mb-3 ${darkMode ? 'text-gray-200' : 'text-gray-700'}`}> {/* Updated title style */}
               Instagram Image Post Engagement
             </h3>
             <div className="h-80">
@@ -459,8 +460,8 @@ const EngagementSection: React.FC<EngagementSectionProps> = ({
         )}
         
         {/* Video Engagement Chart (Instagram or TikTok) */}
-        <div className={`p-6 rounded-lg shadow-sm ${darkMode ? 'bg-gray-700' : 'bg-gray-50'} ${platform === 'Instagram' ? 'lg:col-span-2' : 'lg:col-span-2'}`}>
-          <h3 className={`text-lg font-semibold mb-4 ${darkMode ? 'text-white' : 'text-gray-800'}`}>
+        <div className={`p-4 rounded-lg shadow ${darkMode ? 'bg-gray-700/50' : 'bg-gray-50'} ${platform === 'Instagram' ? 'lg:col-span-2' : 'lg:col-span-2'}`}> {/* Updated inner card style */}
+          <h3 className={`text-md font-semibold mb-3 ${darkMode ? 'text-gray-200' : 'text-gray-700'}`}> {/* Updated title style */}
             {platform === 'Instagram' ? 'Instagram Video Post Engagement' : 'TikTok Engagement'}
           </h3>
           <div className="h-80">
@@ -473,8 +474,8 @@ const EngagementSection: React.FC<EngagementSectionProps> = ({
         </div>
         
         {/* Engagement Distribution Pie Chart */}
-        <div className={`p-6 rounded-lg shadow-sm ${darkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
-          <h3 className={`text-lg font-semibold mb-4 ${darkMode ? 'text-white' : 'text-gray-800'}`}>
+        <div className={`p-4 rounded-lg shadow ${darkMode ? 'bg-gray-700/50' : 'bg-gray-50'}`}> {/* Updated inner card style */}
+          <h3 className={`text-md font-semibold mb-3 ${darkMode ? 'text-gray-200' : 'text-gray-700'}`}> {/* Updated title style */}
             {platform} Engagement Distribution
           </h3>
           <div className="h-80">

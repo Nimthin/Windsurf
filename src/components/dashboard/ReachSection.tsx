@@ -130,16 +130,12 @@ const ReachSection: React.FC<ReachSectionProps> = ({
   };
 
   return (
-    <div className="mt-8 p-4 bg-white rounded-lg shadow-md">
-      <h2 className="text-xl font-bold mb-4">Reach Analytics</h2>
-      <p className="text-sm text-gray-600 mb-6">
-        {platform === 'Instagram' ? 'Impressions and reach' : 'Views and reach'} analysis for {platform} content from selected brands.
-      </p>
-      
+    // Removed styling from root div, title and description are now handled by DashboardOverview.tsx
+    <div>
       <div className="grid grid-cols-1 gap-6">
         {/* Bar Chart - Instagram Reach by Brand */}
-        <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
-          <h3 className="text-lg font-semibold mb-4">{platform} Reach by Brand</h3>
+        <div className="bg-white dark:bg-gray-800/50 p-4 rounded-lg shadow"> {/* Updated inner card style */}
+          <h3 className="text-md font-semibold text-gray-700 dark:text-gray-200 mb-3">{platform} Reach by Brand</h3> {/* Updated title style */}
           <div className="h-80">
             {!hasData ? (
               <EmptyChartFallback message="No reach data available" />
