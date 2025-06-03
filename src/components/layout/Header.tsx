@@ -131,24 +131,17 @@ const Header: React.FC<HeaderProps> = () => {
               </div>
             )}
           </div>
-          <p className="text-xs text-gray-500 flex items-center"> {/* Adjusted text color */}
-            <FaIcons.FaCalendarAlt className="mr-1" />
-            Last updated: {getLastFetchedTime()}
-            <span className="ml-2 text-xs text-nordstrom-blue cursor-pointer hover:underline" onClick={handleRefresh}> {/* Adjusted text color */}
-              Refresh now
-            </span>
-          </p>
+          {/* "Last updated" text and "Refresh now" span removed as per subtask */}
         </div>
 
         {/* Desktop Menu Items */}
-        {/* TODO: Restyle these buttons and dropdowns for a bg-white header. Current styling is for dark background. */}
         <div className="hidden lg:flex items-center space-x-3">
           {/* Dark Mode Toggle */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={toggleDarkMode}
-            className={`p-2 rounded-full transition-colors duration-150 ${darkMode ? 'hover:bg-gray-700 text-gray-300 hover:text-yellow-400' : 'hover:bg-gray-100 text-gray-600 hover:text-nordstrom-blue'} focus:outline-none focus:ring-2 focus:ring-nordstrom-blue`}
+            className={`p-2 rounded-full transition-colors duration-150 ${darkMode ? 'hover:bg-gray-700 text-gray-300 hover:text-yellow-400' : 'hover:bg-gray-100 text-gray-500 hover:text-[#004170]'} focus:outline-none focus:ring-2 focus:ring-[#004170]`}
             aria-label="Toggle dark mode"
             title="Toggle dark mode"
           >
@@ -163,7 +156,7 @@ const Header: React.FC<HeaderProps> = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveFilterSection(activeFilterSection === 'months' ? null : 'months')}
-                className="bg-transparent border border-[#004170] text-[#004170] hover:bg-[#004170] hover:text-white rounded-md px-3 py-1.5 text-sm font-medium transition-colors duration-150 flex items-center filter-button group"
+                className="bg-transparent border border-[#004170] text-[#004170] hover:bg-[#004170] hover:text-white rounded-lg px-3 py-1.5 text-sm font-medium transition-colors duration-150 flex items-center filter-button group"
               >
                 <FaIcons.FaCalendarAlt className="mr-2 text-[#004170] group-hover:text-white transition-colors duration-150" size={14} />
                 <span>Month: {filterOptions.selectedMonth}</span>
@@ -206,7 +199,7 @@ const Header: React.FC<HeaderProps> = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveFilterSection(activeFilterSection === 'brands' ? null : 'brands')}
-                className="bg-transparent border border-[#004170] text-[#004170] hover:bg-[#004170] hover:text-white rounded-md px-3 py-1.5 text-sm font-medium transition-colors duration-150 flex items-center filter-button group"
+                className="bg-transparent border border-[#004170] text-[#004170] hover:bg-[#004170] hover:text-white rounded-lg px-3 py-1.5 text-sm font-medium transition-colors duration-150 flex items-center filter-button group"
               >
                 <FaIcons.FaStore className="mr-2 text-[#004170] group-hover:text-white transition-colors duration-150" size={14} />
                 <span>Brands ({selectedBrands.length})</span>
@@ -252,7 +245,7 @@ const Header: React.FC<HeaderProps> = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveFilterSection(activeFilterSection === 'platform' ? null : 'platform')}
-                className="bg-transparent border border-[#004170] text-[#004170] hover:bg-[#004170] hover:text-white rounded-md px-3 py-1.5 text-sm font-medium transition-colors duration-150 flex items-center filter-button group"
+                className="bg-transparent border border-[#004170] text-[#004170] hover:bg-[#004170] hover:text-white rounded-lg px-3 py-1.5 text-sm font-medium transition-colors duration-150 flex items-center filter-button group"
               >
                 <FaIcons.FaShareAlt className="mr-2 text-[#004170] group-hover:text-white transition-colors duration-150" size={14} />
                 <span>Platforms</span>
@@ -293,47 +286,17 @@ const Header: React.FC<HeaderProps> = () => {
                 </div>
               )}
             </div>
-            
-            {/* Reset filters button */}
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => {
-                setFilterOptions({
-                  ...initialFilterOptions,
-                  selectedMonth: 'All (Feb-May)'
-                });
-                setSelectedBrands(['Nordstrom']);
-                refreshData();
-              }}
-              className="bg-transparent border border-[#004170] text-[#004170] hover:bg-[#004170] hover:text-white rounded-md px-3 py-1.5 text-sm font-medium transition-colors duration-150 flex items-center group"
-              title="Reset all filters"
-            >
-              <BiIcons.BiReset className="mr-1 text-[#004170] group-hover:text-white transition-colors duration-150" />
-              <span>Reset</span>
-            </motion.button>
+            {/* "Reset filters" button removed */}
           </div>
 
-          {/* Main Refresh Button */}
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            animate={refreshClicked ? { rotate: 360 } : {}}
-            transition={{ duration: 0.5 }}
-            onClick={handleRefresh}
-            disabled={isLoading}
-            className={`bg-[#004170] hover:bg-[#003459] text-white px-3 py-1.5 text-sm font-medium rounded-md flex items-center transition-colors duration-150 ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
-          >
-            <BiIcons.BiRefresh className={`mr-2 ${isLoading ? 'animate-spin' : ''}`} size={20} />
-            <span>{isLoading ? 'Refreshing...' : 'Refresh Data'}</span>
-          </motion.button>
+          {/* "Refresh Data" button removed */}
           
           {/* Export Button */}
           <div className="relative">
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="bg-transparent border border-[#004170] text-[#004170] hover:bg-[#004170] hover:text-white rounded-md px-3 py-1.5 text-sm font-medium transition-colors duration-150 flex items-center group"
+              className="bg-transparent border border-[#004170] text-[#004170] hover:bg-[#004170] hover:text-white rounded-lg px-3 py-1.5 text-sm font-medium transition-colors duration-150 flex items-center group"
               onClick={() => {
                 // Generate export data for selected brands
                 const exportData = {
