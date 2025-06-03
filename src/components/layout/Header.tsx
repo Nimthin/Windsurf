@@ -260,10 +260,11 @@ const Header: React.FC<HeaderProps> = () => {
                     </div>
                     
                     <div className="flex flex-col space-y-2">
-                      {['All', 'Instagram', 'TikTok'].map((platform) => (
+                      {/* Modified to only offer Instagram and TikTok */}
+                      {['Instagram', 'TikTok'].map((platform) => (
                         <button
                           key={platform}
-                          onClick={() => handlePlatformChange(platform as Platform | 'All')}
+                          onClick={() => handlePlatformChange(platform as Platform)} // 'All' is no longer an option here
                           className={`px-3 py-2 rounded-md flex items-center justify-between ${
                             filterOptions.platform === platform
                               ? 'bg-nordstrom-blue text-white' /* Active item */
@@ -271,7 +272,7 @@ const Header: React.FC<HeaderProps> = () => {
                           }`}
                         >
                           <span className="flex items-center">
-                            {platform === 'All' && <BiIcons.BiWorld size={16} className="mr-2" />}
+                            {/* Removed 'All' platform icon logic */}
                             {platform === 'Instagram' && <FaIcons.FaInstagram size={16} className="mr-2" />}
                             {platform === 'TikTok' && <FaIcons.FaTiktok size={16} className="mr-2" />}
                             {platform}
@@ -286,10 +287,10 @@ const Header: React.FC<HeaderProps> = () => {
                 </div>
               )}
             </div>
-            {/* "Reset filters" button removed */}
+            {/* "Reset filters" button removed as per subtask - this was already done in a previous step, re-confirming */}
           </div>
 
-          {/* "Refresh Data" button removed */}
+          {/* "Refresh Data" button removed as per subtask - this was already done in a previous step, re-confirming */}
           
           {/* Export Button */}
           <div className="relative">
@@ -448,7 +449,7 @@ const Header: React.FC<HeaderProps> = () => {
                 >
                   <div className="flex items-center">
                     <FaIcons.FaShareAlt className="mr-2" size={14} />
-                    <span>Platforms: {filterOptions.platform}</span>
+                    <span>Platforms: {filterOptions.platform === 'All' ? 'Instagram' : filterOptions.platform}</span> {/* Default to Instagram if 'All' */}
                   </div>
                   <BiIcons.BiChevronDown className="ml-1" />
                 </motion.button>
@@ -456,10 +457,11 @@ const Header: React.FC<HeaderProps> = () => {
                   <div className={`mt-1 rounded-md shadow-lg ${darkMode ? 'bg-gray-600 text-gray-100' : 'bg-white text-gray-800'} ring-1 ring-black ring-opacity-5 z-50 filter-dropdown`}> {/* Adjusted for light theme */}
                     <div className="p-3 space-y-2">
                       <h3 className="font-medium text-sm">Select Platform</h3>
-                      {['All', 'Instagram', 'TikTok'].map((platform) => (
+                      {/* Modified to only offer Instagram and TikTok */}
+                      {['Instagram', 'TikTok'].map((platform) => (
                         <button
                           key={platform}
-                          onClick={() => { handlePlatformChange(platform as Platform | 'All'); setIsMobileMenuOpen(false); setActiveFilterSection(null);}}
+                          onClick={() => { handlePlatformChange(platform as Platform); setIsMobileMenuOpen(false); setActiveFilterSection(null);}}
                           className={`w-full px-3 py-2 rounded-md flex items-center justify-between text-sm ${
                             filterOptions.platform === platform
                               ? 'bg-nordstrom-blue text-white' /* Active item */
@@ -467,7 +469,7 @@ const Header: React.FC<HeaderProps> = () => {
                           }`}
                         >
                           <span className="flex items-center">
-                            {platform === 'All' && <BiIcons.BiWorld size={16} className="mr-2" />}
+                            {/* Removed 'All' platform icon logic */}
                             {platform === 'Instagram' && <FaIcons.FaInstagram size={16} className="mr-2" />}
                             {platform === 'TikTok' && <FaIcons.FaTiktok size={16} className="mr-2" />}
                             {platform}
@@ -480,38 +482,14 @@ const Header: React.FC<HeaderProps> = () => {
                 )}
               </div>
 
-              {/* Reset filters button */}
-              <motion.button
-                onClick={() => {
-                  setFilterOptions({ ...initialFilterOptions, selectedMonth: 'All (Feb-May)' });
-                  setSelectedBrands(['Nordstrom']);
-                  refreshData();
-                  setIsMobileMenuOpen(false); setActiveFilterSection(null);
-                }}
-                className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 p-2 rounded-md flex items-center justify-center" /* Adjusted for light theme */
-                title="Reset all filters"
-              >
-                <BiIcons.BiReset className="mr-1" />
-                <span>Reset Filters</span>
-              </motion.button>
-
-              {/* Main Refresh Button */}
-              <motion.button
-                animate={refreshClicked ? { rotate: 360 } : {}}
-                transition={{ duration: 0.5 }}
-                onClick={() => {handleRefresh(); setIsMobileMenuOpen(false); setActiveFilterSection(null);}}
-                disabled={isLoading}
-                className={`w-full bg-nordstrom-blue hover:bg-opacity-90 text-white p-2 rounded-md flex items-center justify-center ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`} /* Primary button style for light theme */
-              >
-                <BiIcons.BiRefresh className={`mr-2 ${isLoading ? 'animate-spin' : ''}`} size={20} />
-                <span>{isLoading ? 'Refreshing...' : 'Refresh Data'}</span>
-              </motion.button>
+              {/* "Reset Filters" button removed from mobile menu as it was removed from desktop */}
+              {/* "Refresh Data" button removed from mobile menu as it was removed from desktop */}
 
               {/* Export Button */}
               <motion.button
                 className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 p-2 rounded-md flex items-center justify-center" /* Adjusted for light theme */
                 onClick={() => {
-                  const exportData = { /* ... export logic ... */ };
+                  const exportData = { /* ... export logic ... */ }; // Ensure export logic still works or is updated if platform 'All' was key
                   // ... rest of export code from desktop ...
                   setIsMobileMenuOpen(false); setActiveFilterSection(null);
                 }}
