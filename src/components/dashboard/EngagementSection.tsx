@@ -118,24 +118,10 @@ const EngagementSection: React.FC<EngagementSectionProps> = ({
       labels: brandData.map(data => data?.brand),
       datasets: [
         {
-          label: 'Avg. Likes per Image Post',
-          data: brandData.map(data => data?.avgLikes),
-          backgroundColor: vibrantColors[0],
-          borderColor: vibrantColors[0].replace('0.8', '1'),
-          borderWidth: 1,
-        },
-        {
-          label: 'Avg. Comments per Image Post',
-          data: brandData.map(data => data?.avgComments),
-          backgroundColor: vibrantColors[1],
-          borderColor: vibrantColors[1].replace('0.8', '1'),
-          borderWidth: 1,
-        },
-        {
           label: 'Image Engagement Rate',
           data: brandData.map(data => data?.engagementRate),
-          backgroundColor: vibrantColors[2],
-          borderColor: vibrantColors[2].replace('0.8', '1'),
+          backgroundColor: vibrantColors[0], // Updated color
+          borderColor: vibrantColors[0].replace('0.8', '1'), // Updated color
           borderWidth: 1,
         }
       ]
@@ -242,24 +228,10 @@ const EngagementSection: React.FC<EngagementSectionProps> = ({
         labels: brandData.map(data => data?.brand),
         datasets: [
           {
-            label: 'Avg. Likes per Video Post',
-            data: brandData.map(data => data?.metrics[0].value),
-            backgroundColor: vibrantColors[2],
-            borderColor: vibrantColors[2].replace('0.8', '1'),
-            borderWidth: 1,
-          },
-          {
-            label: 'Avg. Comments per Video Post',
-            data: brandData.map(data => data?.metrics[1].value),
-            backgroundColor: vibrantColors[3],
-            borderColor: vibrantColors[3].replace('0.8', '1'),
-            borderWidth: 1,
-          },
-          {
             label: 'Video Engagement Rate (%)',
-            data: brandData.map(data => data?.metrics[2].value),
-            backgroundColor: vibrantColors[4],
-            borderColor: vibrantColors[4].replace('0.8', '1'),
+            data: brandData.map(data => data?.metrics[2].value), // This was already correct for the rate
+            backgroundColor: vibrantColors[0], // Updated color
+            borderColor: vibrantColors[0].replace('0.8', '1'), // Updated color
             borderWidth: 1,
           }
         ]
